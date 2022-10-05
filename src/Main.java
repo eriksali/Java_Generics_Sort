@@ -1,10 +1,10 @@
 import java.util.*;
-import sort.Sort;
+import sort.SortingAlgorithm;
 
-public class Compare_BubbleSort_MergeSort
+public class Main
 {
 
-    public Compare_BubbleSort_MergeSort()
+    public Main()
     {
     }
 
@@ -55,18 +55,21 @@ public class Compare_BubbleSort_MergeSort
             int array[] = createRandomArray(arrayLength);
             System.out.print("\nUnsorted Numbers:  \n" + Arrays.toString(array));
             startTime = System.currentTimeMillis();
-            int sortedArray[] = Sort.mergeSort(array);
+            int sortedArray[] = SortingAlgorithm.mergeSort(array);
             double mergeTime = Double.valueOf((double)(System.currentTimeMillis() - startTime) / 1000D);
             
             System.out.print("\nMergeSort Numbers: \n" + Arrays.toString(sortedArray));
-            //System.out.println((new StringBuilder("The sorted array is in correct order: ")).append(isSorted(sortedArray)).toString());
+            System.out.println((new StringBuilder("The sorted array is in correct order: ")).append(isSorted(sortedArray)).toString());
             startTime = System.currentTimeMillis();
-            Sort.bubbleSort(array);
+            SortingAlgorithm.bubbleSort(array);
             double bubbleTime = Double.valueOf((double)(System.currentTimeMillis() - startTime) / 1000D);
             
             System.out.print("\nBubbleSort Numbers:\n" + Arrays.toString(array));
             System.out.print("\n");
-            System.out.println((new StringBuilder("\nCheck if they have the same result: ")).append(Arrays.equals(sortedArray, array)).toString()); 
+
+            System.out.println((new StringBuilder("\nIf sorted:  ")).append(isSorted(sortedArray)).toString());
+            
+            System.out.println((new StringBuilder("Same order: ")).append(Arrays.equals(sortedArray, array)).toString()); 
             
             System.out.printf("\nThe time of MergeSort  for size %d is %.6fs\n", new Object[] {
                 Integer.valueOf(arrayLength), mergeTime});

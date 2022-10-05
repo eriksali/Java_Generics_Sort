@@ -2,10 +2,10 @@ package sort;
 
 import java.util.Arrays;
 
-public class Sort
+public class SortingAlgorithm
 {
 
-    public Sort()
+    public SortingAlgorithm()
     {
     }
 
