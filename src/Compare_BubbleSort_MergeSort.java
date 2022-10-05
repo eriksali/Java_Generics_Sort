@@ -1,10 +1,10 @@
 import java.util.*;
 import sort.Sort;
 
-public class App
+public class Compare_BubbleSort_MergeSort
 {
 
-    public App()
+    public Compare_BubbleSort_MergeSort()
     {
     }
 
@@ -44,37 +44,41 @@ public class App
         throws Exception
     {
         Scanner scanner = new Scanner(System.in);
-        String flag;
+
+        int arrayLength = 0;
+        System.out.println("Please enter the size of input array:");
+        arrayLength = scanner.nextInt();
+
         do
         {
-            System.out.println("enter the length of the random int array:");
-            int arrayLength = scanner.nextInt();
             long startTime = System.currentTimeMillis();
             int array[] = createRandomArray(arrayLength);
-            //System.out.print("\nUnsorted Numbers:  " + Arrays.toString(array));
+            System.out.print("\nUnsorted Numbers:  \n" + Arrays.toString(array));
             startTime = System.currentTimeMillis();
             int sortedArray[] = Sort.mergeSort(array);
             double mergeTime = Double.valueOf((double)(System.currentTimeMillis() - startTime) / 1000D);
-            System.out.printf("\n\nMergeSort  an array of size %d is %.8f s\n", new Object[] {
-                Integer.valueOf(arrayLength), mergeTime
-            });
-            //System.out.print("\nMergeSort Numbers: " + Arrays.toString(sortedArray));
+            
+            System.out.print("\nMergeSort Numbers: \n" + Arrays.toString(sortedArray));
             //System.out.println((new StringBuilder("The sorted array is in correct order: ")).append(isSorted(sortedArray)).toString());
             startTime = System.currentTimeMillis();
             Sort.bubbleSort(array);
             double bubbleTime = Double.valueOf((double)(System.currentTimeMillis() - startTime) / 1000D);
-            System.out.printf("BubbleSort an array of size %d is %.8f s\n", new Object[] {
-                Integer.valueOf(arrayLength), Double.valueOf((double)(System.currentTimeMillis() - startTime) / 1000D)
-            });
-            System.out.println((new StringBuilder("\nMergeSort and BubbleSort generate the same result: ")).append(Arrays.equals(sortedArray, array)).toString()); 
-            System.out.println((new StringBuilder("\nBubbleSort takes ")).append(String.valueOf(bubbleTime/mergeTime)).append(" times more than MergeSort does.")); 
-            //System.out.print("\nBubbleSort Numbers:" + Arrays.toString(array));
             
-            System.out.println("\nContinue? enter Y or N:");
+            System.out.print("\nBubbleSort Numbers:\n" + Arrays.toString(array));
+            System.out.print("\n");
+            System.out.println((new StringBuilder("\nCheck if they have the same result: ")).append(Arrays.equals(sortedArray, array)).toString()); 
             
-            flag = scanner.next();
-        } while(!(flag.equals("N") || flag.equals("n")));
+            System.out.printf("\nThe time of MergeSort  for size %d is %.6fs\n", new Object[] {
+                Integer.valueOf(arrayLength), mergeTime});
+            System.out.printf("The time of BubbleSort for size %d is %.6fs\n", new Object[] {
+                Integer.valueOf(arrayLength), bubbleTime});
+            System.out.println((new StringBuilder("\nBubbleSort is ")).append(String.valueOf(bubbleTime/mergeTime)).append(" times faster than MergeSort.")); 
+            
+            System.out.println("\nPlease enter the size of input array, or 0(exit):");
+            
+            arrayLength = scanner.nextInt();
+        } while(!(arrayLength==0));
         scanner.close();
-        System.out.println("Bye!");
+
     }
 }
