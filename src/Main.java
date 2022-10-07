@@ -1,87 +1,69 @@
-import java.util.*;
-import sort.SortingAlgorithm;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
+import person.Student;
+import sort.SortingAlgorithm;
 public class Main
 {
 
-    public Main()
-    {
-    }
-
-    public static void printArray(int array[])
-    {
-        int ai[];
-        int j = (ai = array).length;
-        for(int i = 0; i < j; i++)
-        {
-            int a = ai[i];
-            System.out.print((new StringBuilder(String.valueOf(a))).append(" ").toString());
-        }
-
-        System.out.println();
-    }
-
-    public static int[] createRandomArray(int arrayLength)
-    {
-        int array[] = new int[arrayLength];
+    @SuppressWarnings("unckecked")
+    public static <T extends Comparable<T>> ArrayList<Student<T>> createRandomArray(int arrayLength, String typeName) {
+        ArrayList<Student<T>> arrayList = new ArrayList<>(arrayLength);
         Random random = new Random();
-        for(int i = 0; i < arrayLength; i++)
-            array[i] = random.nextInt(100);
 
-        return array;
+        for (int i = 0; i < arrayLength; i++) {
+            String id = String.valueOf(i);
+            switch (typeName) {
+                case "i":
+                    arrayList.add((Student<T>) new Student<Integer>(id, random.nextInt(100)));
+                    break;
+                case "f":
+                    arrayList.add((Student<T>)new Student<Float>(id, random.nextFloat()));
+                    break;
+                case "d": 
+                    arrayList.add((Student<T>) new Student<Double>(id, random.nextDouble()));
+                    break;
+                default:
+                    //System.out.println("Use Integer as the grade data type");
+                    //arrayList.add((Student<T>) new Student<Integer>(id, random.nextInt(100)));
+                    System.out.println("Exit");
+                    break;
+
+            }
+        }
+        return arrayList;
     }
 
-    public static boolean isSorted(int array[])
+    public static <T extends Comparable<T>> void main(String args[]) throws Exception
     {
-        for(int i = 0; i < array.length - 1; i++)
-            if(array[i] > array[i + 1])
-                return false;
+        try (Scanner scanner = new Scanner(System.in)) {
 
-        return true;
-    }
-
-    public static void main(String args[])
-        throws Exception
-    {
-        Scanner scanner = new Scanner(System.in);
-
-        int arrayLength = 0;
-        System.out.println("Please enter the size of input array:");
-        arrayLength = scanner.nextInt();
-
-        do
-        {
-            long startTime = System.currentTimeMillis();
-            int array[] = createRandomArray(arrayLength);
-            System.out.print("\nUnsorted Numbers:  \n" + Arrays.toString(array));
-            startTime = System.currentTimeMillis();
-            int sortedArray[] = SortingAlgorithm.mergeSort(array);
-            double mergeTime = Double.valueOf((double)(System.currentTimeMillis() - startTime) / 1000D);
-            
-            System.out.print("\nMergeSort Numbers: \n" + Arrays.toString(sortedArray));
-            System.out.println((new StringBuilder("The sorted array is in correct order: ")).append(isSorted(sortedArray)).toString());
-            startTime = System.currentTimeMillis();
-            SortingAlgorithm.bubbleSort(array);
-            double bubbleTime = Double.valueOf((double)(System.currentTimeMillis() - startTime) / 1000D);
-            
-            System.out.print("\nBubbleSort Numbers:\n" + Arrays.toString(array));
-            System.out.print("\n");
-
-            System.out.println((new StringBuilder("\nIf sorted:  ")).append(isSorted(sortedArray)).toString());
-            
-            System.out.println((new StringBuilder("Same order: ")).append(Arrays.equals(sortedArray, array)).toString()); 
-            
-            System.out.printf("\nThe time of MergeSort  for size %d is %.6fs\n", new Object[] {
-                Integer.valueOf(arrayLength), mergeTime});
-            System.out.printf("The time of BubbleSort for size %d is %.6fs\n", new Object[] {
-                Integer.valueOf(arrayLength), bubbleTime});
-            System.out.println((new StringBuilder("\nBubbleSort is ")).append(String.valueOf(bubbleTime/mergeTime)).append(" times faster than MergeSort.")); 
-            
-            System.out.println("\nPlease enter the size of input array, or 0(exit):");
-            
+            //String typeName = "";
+            int arrayLength = 0;
+            System.out.println("Please input the array size: ");
             arrayLength = scanner.nextInt();
-        } while(!(arrayLength==0));
-        scanner.close();
 
+            System.out.println("Please input the grade data type (choose i/Integer, f/Float, or d/Double): ");
+            String typeName = scanner.next();
+
+            do {
+                
+                
+                //int arrayLength = 20;
+                ArrayList<Student<Integer>> arrayList = createRandomArray(arrayLength, typeName);
+
+                System.out.println(arrayList.toString());
+                System.out.println(SortingAlgorithm.isSorted(arrayList));
+                SortingAlgorithm.mergeSort(arrayList);
+                //SortingAlgorithm.bubbleSort(arrayList);
+                System.out.println(arrayList.toString());
+                System.out.println(SortingAlgorithm.isSorted(arrayList));
+
+                System.out.println("Please input the array size: (0 to exit)");
+                arrayLength = scanner.nextInt();
+            } while(!(arrayLength == 0));
+            scanner.close();
+        }
     }
 }

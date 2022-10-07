@@ -1,6 +1,7 @@
 package sort;
 
-import java.util.Arrays;
+//import java.util.Arrays;
+import java.util.ArrayList;
 
 public class SortingAlgorithm
 {
@@ -9,55 +10,76 @@ public class SortingAlgorithm
     {
     }
 
-    public static void bubbleSort(int array[])
+    public static <E> void swap(ArrayList<E> arrayList, int i, int j){
+        E temp = arrayList.get(i);
+        arrayList.set(i, arrayList.get(j));
+        arrayList.set(j, temp);
+    }
+
+    public static <E extends Comparable<E>> boolean isSorted(ArrayList<E> arrayList)
     {
-        for(int i = array.length - 1; i > 0; i--)
+        for(int i = 0; i < arrayList.size() - 1; i++)
+            if(arrayList.get(i).compareTo(arrayList.get(i + 1)) > 0)
+                return false;
+
+        return true;
+    }
+
+    public static <E extends Comparable<E>> void bubbleSort(ArrayList<E> arrayList)
+    {
+        for(int i = arrayList.size() - 1; i > 0; i--)
         {
-            for(int j = 0; j < i; j++)
-                if(array[j] > array[j + 1])
+            for(int j = 0; j < i; j++) {
+                if(arrayList.get(j).compareTo(arrayList.get(j + 1)) > 0)
                 {
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
+                    swap(arrayList, j, j + 1);
                 }
-
-        }
-
-    }
-
-    public static int[] merge(int array1[], int array2[])
-    {
-        int mergedArray[] = new int[array1.length + array2.length];
-        int i = 0;
-        int j = 0;
-        int k;
-        for(k = 0; j < array1.length && k < array2.length;)
-            if(array1[j] <= array2[k])
-                mergedArray[i++] = array1[j++];
-            else
-                mergedArray[i++] = array2[k++];
-
-        while(j < array1.length) 
-            mergedArray[i++] = array1[j++];
-        while(k < array2.length) 
-            mergedArray[i++] = array2[k++];
-        return mergedArray;
-    }
-
-    public static int[] mergeSort(int array[])
-    {
-        if(array.length <= 1)
-        {
-            return array;
-        } else
-        {
-            int arrayLength1 = array.length / 2;
-            int array1[] = Arrays.copyOfRange(array, 0, arrayLength1);
-            int array2[] = Arrays.copyOfRange(array, arrayLength1, array.length);
-            array1 = mergeSort(array1);
-            array2 = mergeSort(array2);
-            int mergedArray[] = merge(array1, array2);
-            return mergedArray;
+            }
         }
     }
+
+    public static <E extends Comparable<E>> void merge(ArrayList<E> arrayList, int start, int middle, int end)
+    {
+        int i = start, j = middle;
+        ArrayList<E> tempArrayList = new ArrayList<>(end - start);
+
+        while (i < middle && j < end) {
+            if (arrayList.get(i).compareTo(arrayList.get(j)) <= 0) {
+                tempArrayList.add(arrayList.get(i));
+                i++;
+            } else {
+                tempArrayList.add(arrayList.get(j));
+                j++;
+            }
+        }
+
+        while (i < middle) {
+            tempArrayList.add(arrayList.get(i));
+            i++;
+        }
+
+        while (j < end) {
+            tempArrayList.add(arrayList.get(j));
+            j++;
+        }
+
+        for (E e : tempArrayList) {
+            arrayList.set(start, e);
+            start++;
+        }
+    }
+
+    public static <E extends Comparable<E>> void mergeSort(ArrayList<E> arrayList, int start, int end) {
+        if (end - start <= 1) 
+            return;
+        int middle = (start + end) / 2;
+        mergeSort(arrayList, start, middle);
+        mergeSort(arrayList, middle, end);
+        merge(arrayList, start, middle, end);
+    }
+
+    public static <E extends Comparable<E>> void mergeSort(ArrayList<E> arrayList) {
+        mergeSort(arrayList, 0, arrayList.size());
+    }
+
 }
