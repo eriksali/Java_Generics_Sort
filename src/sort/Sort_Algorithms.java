@@ -3,10 +3,10 @@ package sort;
 //import java.util.Arrays;
 import java.util.ArrayList;
 
-public class SortingAlgorithm
+public class Sort_Algorithms
 {
 
-    public SortingAlgorithm()
+    public Sort_Algorithms()
     {
     }
 

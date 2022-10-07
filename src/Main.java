@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import person.Student;
-import sort.SortingAlgorithm;
+import sort.Sort_Algorithms;
 public class Main
 {
 
@@ -54,11 +54,11 @@ public class Main
                 ArrayList<Student<Integer>> arrayList = createRandomArray(arrayLength, typeName);
 
                 System.out.println(arrayList.toString());
-                System.out.println(SortingAlgorithm.isSorted(arrayList));
-                SortingAlgorithm.mergeSort(arrayList);
+                System.out.println(Sort_Algorithms.isSorted(arrayList));
+                Sort_Algorithms.mergeSort(arrayList);
                 //SortingAlgorithm.bubbleSort(arrayList);
                 System.out.println(arrayList.toString());
-                System.out.println(SortingAlgorithm.isSorted(arrayList));
+                System.out.println(Sort_Algorithms.isSorted(arrayList));
 
                 System.out.println("Please input the array size: (0 to exit)");
                 arrayLength = scanner.nextInt();
